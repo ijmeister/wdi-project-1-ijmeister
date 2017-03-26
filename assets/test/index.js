@@ -1,0 +1,1 @@
+require('./othello_test');
