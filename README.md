@@ -3,12 +3,10 @@
 
 # Othello
 
-## Rules
+## Game Setup
 
 1. Game Board 8 x 8, 64 black or white pieces
 2. starting position white, black, black, white (diagonal) at the center of the board.
-3.
-
 
 ## Gameflow
 
@@ -32,8 +30,9 @@ In other words, a valid move is one where at least one piece is reversed.
 
 1. Requirements
 2. Game lib
-
-
+3. UI
+4. AI (stretch goal)
 
 ## Reference
 1. https://en.wikipedia.org/wiki/Reversi
+2. http://www.othelloonline.org/

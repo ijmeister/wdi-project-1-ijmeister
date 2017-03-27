@@ -1,1 +1,1 @@
-require('./othello_test');
+require('./othello_test')
