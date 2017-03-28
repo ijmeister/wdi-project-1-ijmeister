@@ -33,33 +33,40 @@ assert.deepEqual(othello.getValidDirections([5, 4]), ['N'], 'Only should return 
 assert.deepEqual(othello.checkIdenticalTileExists([5, 4], 'N'), [3, 4], 'There should be a black tile at (3,4).')
 console.log('Passed Testing Valid Move')
 console.log('-------------------------------')
+
 console.log('Testing Reversing Tiles player1')
 othello.reverseTiles([2, 3], [4, 3], 'S')
 assert.strictEqual(othello.tiles[ 3 ][ 3 ], PLAYER_1, '(3,3) should have been changed to black.')
 console.log('Passed Reversing Tiles player1')
 console.log('-------------------------------')
+
 console.log('Testing switch player')
 othello.switchTurn()
 assert.strictEqual(othello.currentPlayer(), PLAYER_2, 'player should be switched to player 2 after switch.')
 console.log('Passed switch player')
 console.log('-------------------------------')
+
 console.log('Testing Player2 Valid Move')
 assert.deepEqual(othello.getValidDirections([4, 2]), ['E', 'NE'], 'Only should return East as valid direction.')
 assert.deepEqual(othello.checkIdenticalTileExists([4, 2], 'E'), [4, 4], 'There should be a white tile at (4,4).')
 assert.deepEqual(othello.checkIdenticalTileExists([4, 2], 'NE'), false, 'There should be no white tile at north east direction.')
 console.log('Passed Testing Player2 Valid Move')
+
 console.log('-------------------------------')
 console.log('Testing Reversing Tiles player2')
 othello.reverseTiles([4, 2], [4, 4], 'E')
 assert.strictEqual(othello.tiles[ 4 ][ 3 ], PLAYER_2, '(4,3) should have been changed to white.')
 console.log('Passed Reversing Tiles player2')
 console.log('-------------------------------')
+
 console.log(othello.tiles)
 othello.switchTurn()
+
 console.log('Testing Turn Count')
 assert.strictEqual(othello.turnCount, 2, 'should be player1\'s turn.')
 console.log('Passed Testing Turn Count')
 console.log('-------------------------------')
+
 console.log('Testing available Moves player1')
 assert.deepEqual(othello.availableMoves(), [[5, 1], [5, 2], [5, 3], [5, 4], [5, 5]], 'There should be 5 available moves for player 1.')
 var tempArr = [ [5, 1], [5, 2], [5, 3], [5, 4], [5, 5] ]

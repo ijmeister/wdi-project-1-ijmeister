@@ -59,11 +59,12 @@ Othello.prototype.initiateGame = function (rowNo = NO_ROW, colNo = NO_COL) {
   this.tiles[ 4 ][ 4 ] = PLAYER_2
 }
 
-Othello.prototype.processClick = function (moveIndex) {
+Othello.prototype.playTurn = function (moveIndex) {
   /**
    * reverse the tiles if it is a valid move
    * return ture if successful, else false
    */
+
 }
 
 Othello.prototype.availableMoves = function () {
@@ -75,15 +76,17 @@ Othello.prototype.availableMoves = function () {
     for (var y = 0; y < NO_COL; y++) {
       // check checkIdenticalTileExists for each tile
       // if exists, check checkIdenticalTileExists for each direction returned from checkIdenticalTileExists
-      var directions = this.getValidDirections([x, y])
-      if (directions) {
-        // console.log(x, y)
-        // console.log(directions)
-        directions.forEach(function (direction) {
-          if (this.checkIdenticalTileExists([x, y], direction)) {
-            okayMoves.push([ x, y ])
-          }
-        }.bind(this))
+      if (this.tiles[ x ][ y ] === null) {
+        var directions = this.getValidDirections([x, y])
+        if (directions) {
+          // console.log(x, y)
+          // console.log(directions)
+          directions.forEach(function (direction) {
+            if (this.checkIdenticalTileExists([x, y], direction)) {
+              okayMoves.push([ x, y ])
+            }
+          }.bind(this))
+        }
       }
     }
   }
@@ -125,6 +128,7 @@ Othello.prototype.checkIdenticalTileExists = function (moveIndex, direction) {
   var newY = moveIndex[ 1 ] + yIncrement
   while (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
     // console.log(this.tiles[ newX ][ newY ], newX, newY)
+    if (this.tiles[ newX ][ newY ] === null) { return false }
     if (this.tiles[ newX ][ newY ] === this.currentPlayer()) {
       return [ newX, newY ]
     }
@@ -165,22 +169,16 @@ Othello.prototype.isValidMove = function (moveIndex) {
    * if there's an opposing tile in between the specific move and any identical tile in the same row, column or diagonal
    * return true or false
    */
-  var availableMoves = this.availableMoves()
-  for (var i = 0; i < availableMoves.length; i++) {
-    // console.log(availableMoves[ i ][ 0 ] === moveIndex[ 0 ])
-    // console.log(availableMoves[ i ][ 1 ] === moveIndex[ 1 ])
-    if (availableMoves[ i ][ 0 ] === moveIndex[ 0 ] && availableMoves[ i ][ 1 ] === moveIndex[ 1 ]) {
-      return true
+  if (this.tiles[ moveIndex[ 0 ] ][ moveIndex[ 1 ] ] === null) {
+    var availableMoves = this.availableMoves()
+    for (var i = 0; i < availableMoves.length; i++) {
+      // console.log(availableMoves[ i ][ 0 ] === moveIndex[ 0 ])
+      // console.log(availableMoves[ i ][ 1 ] === moveIndex[ 1 ])
+      if (availableMoves[ i ][ 0 ] === moveIndex[ 0 ] && availableMoves[ i ][ 1 ] === moveIndex[ 1 ]) {
+        return true
+      }
     }
   }
-  // .forEach(function (availMove) {
-  //   //console.log(availMove, moveIndex)
-  //   console.log(availMove[ 0 ] === moveIndex[ 0 ])
-  //   console.log(availMove[ 1 ] === moveIndex[ 1 ])
-  //   if (availMove[ 0 ] === moveIndex[ 0 ] && availMove[ 1 ] === moveIndex[ 1 ]) {
-  //     return true
-  //   }
-  // })
   return false
 }
 
@@ -203,4 +201,4 @@ Othello.prototype.switchTurn = function () {
   this.turnCount++
 }
 
-module.exports = Othello
+// module.exports = Othello

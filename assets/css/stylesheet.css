@@ -1,3 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Rock+Salt');
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  color: blue;
+  background-color: black;
+}
+
+.box {
+  width: 80px;
+  height: 80px;
+  border: 1px solid black;
+  /*margin: 10px;*/
+  padding: 10px;
+  /*display: inline-block;*/
+  text-align: center;
+  /*line-height: 80px;*/
+  color: white;
+  font-size: 48px;
+  background-color: rgba(121, 66, 27, 0.6);
+}
+
+.boxColor1 {
+  /*background-color: #128e12;*/
+}
+
+.boxColor2 {
+  /*background-color: #006000;*/
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 800px;
+  width: 80%;
+  /*background-color: #6a370e;*/
+  background: url('http://i.stack.imgur.com/jGlzr.png') no-repeat 0 0 scroll;
+  background-color:#0C0C0C;
+}
+
+.grid {
+  margin:0 auto;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section, h2, h1 {
+  padding-top: 50px;
+  text-align: center;
+  /*line-height: 50px;*/
+  font-size: 64px;
+  color: black;
+  opacity: 0.6
+}
+
+.footer {
+  height: 50px;
+}
+
+div.box img {
+  width: 40px;
+  height: 40px;
+}
+
+div.box img.dimmy {
+  opacity: 0.3
+}
+
+h1 {
+  /*font-family: 'Rock Salt', cursive;*/
+  letter-spacing: 0.5em;
 }
