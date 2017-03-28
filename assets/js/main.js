@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         boxDiv = document.createElement('div')
         boxDiv.id = 'box_' + i + '_' + j
         boxDiv.classList.add('box')
-        if((j+i) % 2) {
+        if ((j + i) % 2) {
           boxDiv.classList.add('boxColor1')
         } else {
           boxDiv.classList.add('boxColor2')
@@ -42,22 +42,43 @@ document.addEventListener('DOMContentLoaded', function () {
       // console.log('can move')
       var moveIndex = [ parseInt(this.id.split('_')[ 1 ]), parseInt(this.id.split('_')[ 2 ]) ]
       var directions
+      // var currentPlayer = game.currentPlayer()
       if (game.isValidMove(moveIndex)) {
         directions = game.getValidDirections(moveIndex)
         directions.forEach(function (direction) {
           var toIndex = game.checkIdenticalTileExists(moveIndex, direction)
           if (toIndex) {
-            console.log('reverse tiles from ' + moveIndex + ' to ' + toIndex + '')
+            // console.log('reverse tiles from ' + moveIndex + ' to ' + toIndex + '')
             // setImage.call(this)
             reverseDivBoxes(moveIndex, toIndex, direction)
             game.reverseTiles(moveIndex, toIndex, direction)
           }
         })
         game.switchTurn()
-
-        // TODO
+        switchPlayerDisplay()
+        updateScore(game.getScoreArray())
         // if there's no more available moves for next player, auto switch turn.
         // if game's over, show who's winner
+        if (!game.availableMoves().length) {
+          if (game.isGameOver()) {
+            // all board filled or no moves available for both players
+            var newScore = game.getScoreArray()
+            var winner = game.whoWon() === PLAYER_1 ? 'p1' : 'p2'
+            if (game.getFlattenedTilesArray().length === 64) {
+              updateScore(newScore)
+              alert(game.whoWon() + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
+              document.querySelector('div.pointer.' + winner).querySelector('img').src = 'assets/images/winner.png'
+            } else {
+              updateScore(newScore)
+              alert('No More available Moves. ' + game.whoWon() + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
+              document.querySelector('div.pointer.' + winner).querySelector('img').src = 'assets/images/winner.png'
+            }
+          } else {
+            // turn was auto switched due to no avilable moves
+            // auto-turning was triggerred when it checked for isGameOver()
+            alert('No more available moves for ' + game.nextPlayer() + '. Turn was auto-switched.')
+          }
+        }
       }
     }
   }
@@ -66,10 +87,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!this.querySelector('img') || !this.querySelector('img.dimmy')) {
       var moveIndex = [ parseInt(this.id.split('_')[ 1 ]), parseInt(this.id.split('_')[ 2 ]) ]
       if (game.isValidMove(moveIndex)) {
-        console.log(moveIndex + 'is a valid move.')
+        // console.log(moveIndex + 'is a valid move.')
         img = document.createElement('img')
         img.classList.add('dimmy')
-        img.src = 'assets/images/black.png'
+        img.src = 'assets/images/' + game.currentPlayer() + '.png'
         this.appendChild(img)
       }
     }
@@ -118,5 +139,19 @@ document.addEventListener('DOMContentLoaded', function () {
       img.classList.add('filledBox')
       this.appendChild(img)
     }
+  }
+
+  function switchPlayerDisplay () {
+    if (game.currentPlayer() === PLAYER_1) {
+      document.querySelector('div.pointer.p2').style.display = 'none'
+      document.querySelector('div.pointer.p1').style.display = 'block'
+    } else {
+      document.querySelector('div.pointer.p1').style.display = 'none'
+      document.querySelector('div.pointer.p2').style.display = 'block'
+    }
+  }
+
+  function updateScore (newScore) {
+    document.querySelector('.score').textContent = newScore[ 0 ] + ' - ' + newScore[ 1 ]
   }
 })

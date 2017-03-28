@@ -59,7 +59,7 @@ assert.strictEqual(othello.tiles[ 4 ][ 3 ], PLAYER_2, '(4,3) should have been ch
 console.log('Passed Reversing Tiles player2')
 console.log('-------------------------------')
 
-console.log(othello.tiles)
+// console.log(othello.tiles)
 othello.switchTurn()
 
 console.log('Testing Turn Count')
@@ -76,6 +76,12 @@ tempArr.forEach(function (moveIndex) {
 })
 assert.strictEqual(othello.isValidMove([6, 3]), false, 'Invalid move should return false.')
 console.log('Passed Testing available Moves player1')
+console.log('-------------------------------')
+
+console.log(othello.tiles)
+console.log('Testing Score Report')
+assert.deepEqual(othello.getScoreArray(), [3, 3], 'Score Report should be 3 vs 3.')
+console.log('Passed Testing Score Report')
 console.log('-------------------------------')
 // assert.strictEqual(othello.isValidMove([2, 3], PLAYER_1), true, 'Should return True for valid move for (2,3) for player1.')
 // assert.strictEqual(othello.isValidMove([5,3],PLAYER_2), true, 'Should return True for valid move for (5,3) for player2.')

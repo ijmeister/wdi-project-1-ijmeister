@@ -59,13 +59,13 @@ Othello.prototype.initiateGame = function (rowNo = NO_ROW, colNo = NO_COL) {
   this.tiles[ 4 ][ 4 ] = PLAYER_2
 }
 
-Othello.prototype.playTurn = function (moveIndex) {
-  /**
-   * reverse the tiles if it is a valid move
-   * return ture if successful, else false
-   */
-
-}
+// Othello.prototype.playTurn = function (moveIndex) {
+//   /**
+//    * reverse the tiles if it is a valid move
+//    * return ture if successful, else false
+//    */
+//
+// }
 
 Othello.prototype.availableMoves = function () {
   /**
@@ -185,8 +185,26 @@ Othello.prototype.isValidMove = function (moveIndex) {
 Othello.prototype.isGameOver = function () {
   /**
    * Check if game over,
-   * if true return the winner, else false
+   *
    */
+  var flattenedTiles = this.getFlattenedTilesArray()
+  if (flattenedTiles.filter(ele => ele !== null).length === 64) {
+    return true
+  }
+  if (!this.availableMoves().length) {
+    this.switchTurn()
+    if (!this.availableMoves().length) {
+      return true
+    }
+  }
+  return false
+}
+
+Othello.prototype.getScoreArray = function () {
+  var flattenedTiles = this.getFlattenedTilesArray()
+  var p1Score = flattenedTiles.filter(ele => ele === PLAYER_1)
+  var p2Score = flattenedTiles.filter(ele => ele === PLAYER_2)
+  return [ p1Score.length, p2Score.length ]
 }
 
 Othello.prototype.nextPlayer = function () {
@@ -199,6 +217,21 @@ Othello.prototype.currentPlayer = function () {
 
 Othello.prototype.switchTurn = function () {
   this.turnCount++
+}
+
+Othello.prototype.getFlattenedTilesArray = function () {
+  return this.tiles.reduce(function (prev, ele) {
+    return prev.concat(ele)
+  }, [])
+}
+
+Othello.prototype.whoWon = function () {
+  var scoreArr = this.getScoreArray()
+  if (scoreArr[ 0 ] > scoreArr[ 1 ]) {
+    return PLAYER_1
+  } else {
+    return PLAYER_2
+  }
 }
 
 // module.exports = Othello
