@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // console.log(moveIndex + 'is a valid move.')
         img = document.createElement('img')
         img.classList.add('dimmy')
-        img.src = 'assets/images/' + game.currentPlayer() + '.png'
+        img.src = 'assets/images/' + game.currentPlayer().toLowerCase() + '.png'
         this.appendChild(img)
       }
     }
