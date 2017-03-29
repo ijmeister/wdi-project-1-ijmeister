@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
   var img
   var game = new Othello()
 
+  document.querySelector('.myButton').addEventListener('click', function () {
+    window.location.reload(true)
+  })
+
   game.initiateGame()
   createBoard()
 
@@ -67,21 +71,24 @@ document.addEventListener('DOMContentLoaded', function () {
             var loser = winner === 'player1' ? 'player2' : 'player1'
             if (game.getFlattenedTilesArray().length === 64) {
               updateScore(newScore)
-              alert(winner + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
+              // alert(winner + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
+              callSweetAlert(winner.toUpperCase() + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
             } else {
               updateScore(newScore)
-              alert('No More available Moves. ' + winner + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
+              // alert('No More available Moves. ' + winner + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
+              callSweetAlert('No More available Moves. ' + winner.toUpperCase() + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
               // document.querySelector('div.pointer.' + winner + ' img').src = 'assets/images/winner.png'
               // document.querySelector('div.pointer.' + winner + ' img').style = 'block'
             }
             // document.querySelector('div.pointer.' + winner + ' img').querySelector('img').src = 'assets/images/winner.png'
             document.querySelector('div.pointer.' + winner + ' img').src = 'assets/images/winner.png'
-            document.querySelector('div.pointer.' + winner + ' img').style = 'block'
-            document.querySelector('div.pointer.' + loser + ' img').style = 'none'
+            document.querySelector('div.pointer.' + winner).style.display = 'block'
+            document.querySelector('div.pointer.' + loser).style.display = 'none'
           } else {
             // turn was auto switched due to no avilable moves
             // auto-turning was triggerred when it checked for isGameOver()
-            alert('No more available moves for ' + game.nextPlayer() + '. Turn was auto-switched.')
+            // alert('No more available moves for ' + game.nextPlayer() + '. Turn was auto-switched.')
+            callSweetAlert('No more available moves for ' + game.nextPlayer() + '. Turn was auto-switched.')
           }
         }
       }
@@ -158,5 +165,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function updateScore (newScore) {
     document.querySelector('.score').textContent = newScore[ 0 ] + ' - ' + newScore[ 1 ]
+  }
+
+  function callSweetAlert (aMessage) {
+    swal({
+      text: aMessage,
+      timer: 5000
+    }).then(
+      function () {},
+      // handling the promise rejection
+      function (dismiss) {
+      }
+    )
   }
 })
