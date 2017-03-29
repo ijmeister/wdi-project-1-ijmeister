@@ -28,7 +28,7 @@ In other words, a valid move is one where at least one piece is reversed.
 
 ## Project Stages
 
-1. Requirements
+1. Requirements / Design
 2. Game lib
 3. UI
 4. AI (stretch goal)

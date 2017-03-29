@@ -39,7 +39,7 @@ var DIRECTIONS_MOVE_MAP = {
 
 var Othello = function () {
   this.tiles = []
-  this.tileCount = 0
+  // this.tileCount = 0
   this.turnCount = 0
 }
 

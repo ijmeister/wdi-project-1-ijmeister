@@ -63,16 +63,21 @@ document.addEventListener('DOMContentLoaded', function () {
           if (game.isGameOver()) {
             // all board filled or no moves available for both players
             var newScore = game.getScoreArray()
-            var winner = game.whoWon() === PLAYER_1 ? 'p1' : 'p2'
+            var winner = game.whoWon() === PLAYER_1 ? 'player1' : 'player2'
+            var loser = winner === 'player1' ? 'player2' : 'player1'
             if (game.getFlattenedTilesArray().length === 64) {
               updateScore(newScore)
-              alert(game.whoWon() + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
-              document.querySelector('div.pointer.' + winner).querySelector('img').src = 'assets/images/winner.png'
+              alert(winner + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
             } else {
               updateScore(newScore)
-              alert('No More available Moves. ' + game.whoWon() + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
-              document.querySelector('div.pointer.' + winner).querySelector('img').src = 'assets/images/winner.png'
+              alert('No More available Moves. ' + winner + ' Wins! Score: ' + newScore[ 0 ] + ' - ' + newScore[ 1 ])
+              // document.querySelector('div.pointer.' + winner + ' img').src = 'assets/images/winner.png'
+              // document.querySelector('div.pointer.' + winner + ' img').style = 'block'
             }
+            // document.querySelector('div.pointer.' + winner + ' img').querySelector('img').src = 'assets/images/winner.png'
+            document.querySelector('div.pointer.' + winner + ' img').src = 'assets/images/winner.png'
+            document.querySelector('div.pointer.' + winner + ' img').style = 'block'
+            document.querySelector('div.pointer.' + loser + ' img').style = 'none'
           } else {
             // turn was auto switched due to no avilable moves
             // auto-turning was triggerred when it checked for isGameOver()
@@ -143,11 +148,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function switchPlayerDisplay () {
     if (game.currentPlayer() === PLAYER_1) {
-      document.querySelector('div.pointer.p2').style.display = 'none'
-      document.querySelector('div.pointer.p1').style.display = 'block'
+      document.querySelector('div.pointer.player2').style.display = 'none'
+      document.querySelector('div.pointer.player1').style.display = 'block'
     } else {
-      document.querySelector('div.pointer.p1').style.display = 'none'
-      document.querySelector('div.pointer.p2').style.display = 'block'
+      document.querySelector('div.pointer.player1').style.display = 'none'
+      document.querySelector('div.pointer.player2').style.display = 'block'
     }
   }
 
