@@ -3,6 +3,7 @@ var PLAYER_2 = 'WHITE'
 var NO_ROW = 8
 var NO_COL = 8
 var DIRECTIONS_MOVE_MAP = {
+  // 8 directions with x,y coordinate map - North, East, South, West, NE, NW, SE, SW
   'N': {
     'x': -1,
     'y': 0
@@ -39,7 +40,6 @@ var DIRECTIONS_MOVE_MAP = {
 
 var Othello = function () {
   this.tiles = []
-  // this.tileCount = 0
   this.turnCount = 0
 }
 
@@ -53,34 +53,27 @@ Othello.prototype.initiateGame = function (rowNo = NO_ROW, colNo = NO_COL) {
       this.tiles[ x ][ y ] = null
     }
   }
+
+  // preset the default state of the game
   this.tiles[ 3 ][ 3 ] = PLAYER_2
   this.tiles[ 3 ][ 4 ] = PLAYER_1
   this.tiles[ 4 ][ 3 ] = PLAYER_1
   this.tiles[ 4 ][ 4 ] = PLAYER_2
 }
 
-// Othello.prototype.playTurn = function (moveIndex) {
-//   /**
-//    * reverse the tiles if it is a valid move
-//    * return ture if successful, else false
-//    */
-//
-// }
-
 Othello.prototype.availableMoves = function () {
   /**
-   * Return all the available moves of current player
+   * Goes through all the tiles and return all the available moves of current player
+   *
    */
   var okayMoves = []
   for (var x = 0; x < NO_ROW; x++) {
     for (var y = 0; y < NO_COL; y++) {
-      // check checkIdenticalTileExists for each tile
-      // if exists, check checkIdenticalTileExists for each direction returned from checkIdenticalTileExists
+      // check getValidDirections for each tile
+      // if exists, check checkIdenticalTileExists for each direction returned from getValidDirections
       if (this.tiles[ x ][ y ] === null) {
         var directions = this.getValidDirections([x, y])
         if (directions) {
-          // console.log(x, y)
-          // console.log(directions)
           directions.forEach(function (direction) {
             if (this.checkIdenticalTileExists([x, y], direction)) {
               okayMoves.push([ x, y ])
@@ -90,13 +83,14 @@ Othello.prototype.availableMoves = function () {
       }
     }
   }
-  // console.log(okayMoves)
   return okayMoves
 }
 
 Othello.prototype.reverseTiles = function (fromIndex, toIndex, direction) {
   /**
-   *  reverse the tiles in between fromIndex and toIndex, as per given direction
+   *  reverse the tiles in between fromIndex and toIndex, as per given direction,
+   *  fromIndex is the [x,y] array which the player has made his move for the current turn
+   *  toIndex is the [x,y] array till which the tiles will be flipped
    */
   var xIncrement = DIRECTIONS_MOVE_MAP[ direction ][ 'x' ]
   var yIncrement = DIRECTIONS_MOVE_MAP[ direction ][ 'y' ]
@@ -104,30 +98,29 @@ Othello.prototype.reverseTiles = function (fromIndex, toIndex, direction) {
   var newY = fromIndex[ 1 ]
   var toX = toIndex[ 0 ]
   var toY = toIndex[ 1 ]
-  // console.log(newX, newY)
-  // console.log(toX, toY)
   while (newX !== toX || newY !== toY) {
     if (this.tiles[ newX ][ newY ] !== this.currentPlayer()) {
       this.tiles[ newX ][ newY ] = this.currentPlayer()
-      // console.log('change (' + newX + ',' + newY + ') to ' + this.playerTurn)
     }
     newX += xIncrement
     newY += yIncrement
   }
-  // console.log(this.tiles)
 }
 
 Othello.prototype.checkIdenticalTileExists = function (moveIndex, direction) {
   /**
    * return index if it can find an identical tile along the given direction
+   * and there is no blank tile in between
    * else false
    */
   var xIncrement = DIRECTIONS_MOVE_MAP[ direction ][ 'x' ]
   var yIncrement = DIRECTIONS_MOVE_MAP[ direction ][ 'y' ]
   var newX = moveIndex[ 0 ] + xIncrement
   var newY = moveIndex[ 1 ] + yIncrement
+  // check index for out of bounds
+  // traverse along the given direction with coordinates from the direction map
   while (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-    // console.log(this.tiles[ newX ][ newY ], newX, newY)
+    // must not have any empty tiles along the direction
     if (this.tiles[ newX ][ newY ] === null) { return false }
     if (this.tiles[ newX ][ newY ] === this.currentPlayer()) {
       return [ newX, newY ]
@@ -142,7 +135,8 @@ Othello.prototype.getValidDirections = function (moveIndex) {
   /**
    *  moveIndex = [1,2] => move to (x,y) / (1,2)
    *  check if intended move index has any adjacent opposing tiles,
-   *  return directions which do as above as an array
+   *  if yes, return directions as an array
+   *  else false
    */
   var opposingTile = this.nextPlayer()
   var matchedDirs = []
@@ -150,16 +144,18 @@ Othello.prototype.getValidDirections = function (moveIndex) {
   var y = moveIndex[ 1 ]
   var xIncrement
   var yIncrement
+  // check for all 8 directions around the move index
+  // loop through each key in the direction map
   for (var dir in DIRECTIONS_MOVE_MAP) {
     xIncrement = DIRECTIONS_MOVE_MAP[ dir ][ 'x' ]
     yIncrement = DIRECTIONS_MOVE_MAP[ dir ][ 'y' ]
+    // making sure the index stays in board during traversing
     if (x + xIncrement >= 0 && y + yIncrement >= 0 && x + xIncrement < 8 && y + yIncrement < 8) {
       if (this.tiles[ x + xIncrement ][ y + yIncrement ] === opposingTile) {
         matchedDirs.push(dir)
       }
     }
   }
-  // console.log(matchedDirs)
   return matchedDirs
 }
 
@@ -172,8 +168,6 @@ Othello.prototype.isValidMove = function (moveIndex) {
   if (this.tiles[ moveIndex[ 0 ] ][ moveIndex[ 1 ] ] === null) {
     var availableMoves = this.availableMoves()
     for (var i = 0; i < availableMoves.length; i++) {
-      // console.log(availableMoves[ i ][ 0 ] === moveIndex[ 0 ])
-      // console.log(availableMoves[ i ][ 1 ] === moveIndex[ 1 ])
       if (availableMoves[ i ][ 0 ] === moveIndex[ 0 ] && availableMoves[ i ][ 1 ] === moveIndex[ 1 ]) {
         return true
       }
@@ -184,8 +178,10 @@ Othello.prototype.isValidMove = function (moveIndex) {
 
 Othello.prototype.isGameOver = function () {
   /**
-   * Check if game over,
-   *
+   * Check if game over
+   * 1. if all the tiles on the board have been filled
+   * 2. if there's no more available moves for current player as well as the next player
+   * NOTE: calling the function when there's no more available moves for the currnt player will trigger the auto-turn
    */
   var flattenedTiles = this.getFlattenedTilesArray()
   if (flattenedTiles.filter(ele => ele !== null).length === 64) {
@@ -201,6 +197,9 @@ Othello.prototype.isGameOver = function () {
 }
 
 Othello.prototype.getScoreArray = function () {
+  /**
+   * get the score as an array [10, 20] => player1 - 10 and player2 - 20
+   */
   var flattenedTiles = this.getFlattenedTilesArray()
   var p1Score = flattenedTiles.filter(ele => ele === PLAYER_1)
   var p2Score = flattenedTiles.filter(ele => ele === PLAYER_2)
@@ -220,6 +219,9 @@ Othello.prototype.switchTurn = function () {
 }
 
 Othello.prototype.getFlattenedTilesArray = function () {
+  /**
+   * convert 2D [ 8 x 8 ] tiles to 1D [ 64 ] Array
+   */
   return this.tiles.reduce(function (prev, ele) {
     return prev.concat(ele)
   }, [])

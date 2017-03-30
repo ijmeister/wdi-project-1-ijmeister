@@ -26,17 +26,23 @@ In other words, a valid move is one where at least one piece is reversed.
 
 5. The player with the most pieces on the board at the end of the game wins.
 
+## Code Design
+
+### Follows OOP
+
+![screenshot](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+### Main logic
+
+### TDD
+
+
 ## Project Stages
 
 1. Requirements / Design
 2. Game lib
 3. UI
-4. AI (stretch goal)
-
-## Bugs
-
-1. There cannot be any blank tiles when it checks for identical tiles along the direction
-2. Checking for validity for occupied tiles is returning true - fixed
+4. AI (stretch goal) - Future improvement
 
 
 ## Reference
