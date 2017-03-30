@@ -1,50 +1,59 @@
-[How to write readme - Markdown CheatSheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)  
-[How to write a good readme for github repo!](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-
 # Othello
+
+#### View [Demo](https://wdi-sg.github.io/wdi-project-1-ijmeister/)
 
 ## Game Setup
 
 1. Game Board 8 x 8, 64 black or white pieces
 2. starting position white, black, black, white (diagonal) at the center of the board.
 
-## Gameflow
+## Game Play
 
 1. Player1 (Black) starts first
-2. Black must place a piece with the black side up on the board, in such a position that there exists at least one straight (horizontal, vertical, or diagonal) occupied line between the new piece and another dark piece, with one or more contiguous white pieces between them.
-In other words, a valid move is one where at least one piece is reversed.
+2. Valid Move needs to fulful 2 conditions.
+  - There needs to be at least one opposing adjacent tile.  
+  - in that same direction, there needs to be an identical tile.
+3. If one player can not make a valid move, play passes back to the other player. When neither player can move, the game ends.
+4. The player with the most pieces on the board at the end of the game wins.
 
-< pic >
+![screenshot](assets/images/readMe/valid_dir.png "Valid directions")
 
-3. Now white plays. This player operates under the same rules, with the roles reversed: white lays down a white piece, causing a black piece to flip. Possibilities at this time appear thus (indicated by transparent pieces)
+![screenshot](assets/images/readMe/valid_move.png "Valid Move")
 
-< pic >
+## Game Flow Diagram
 
-4. If one player can not make a valid move, play passes back to the other player. When neither player can move, the game ends.
-
-< pic >
-
-5. The player with the most pieces on the board at the end of the game wins.
+![screenshot](assets/images/readMe/flowchart2.png "flowchart")
 
 ## Code Design
 
 ### Follows OOP
 
-![screenshot](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![screenshot](assets/images/readMe/OOP.png "OOP")
 
 ### Main logic
 
+- Traversing the grid as (x,y) coordinate from one tile to another, when checking for the 2 required conditions for the player move
+
+![screenshot](assets/images/readMe/coordinate.png "Coordinate")
+
+![screenshot](assets/images/readMe/coordinate_code.png "Coordinate")
+
 ### TDD
 
+- Main logic was first built and tested simultaneously with npm test cases
+
+![screenshot](assets/images/readMe/tdd.png "tdd")
+
+![screenshot](assets/images/readMe/test.png "test output")
 
 ## Project Stages
 
 1. Requirements / Design
-2. Game lib
+2. Game Logic
 3. UI
 4. AI (stretch goal) - Future improvement
-
 
 ## Reference
 1. https://en.wikipedia.org/wiki/Reversi
 2. http://www.othelloonline.org/
+3. background image from [here](http://google.com)
