@@ -10,9 +10,9 @@
 ## Game Play
 
 1. Player1 (Black) starts first
-2. Valid Move needs to fulful 2 conditions.
-  - There needs to be at least one opposing adjacent tile.  
-  - in that same direction, there needs to be an identical tile.
+2. A valid move needs to fulfill 2 conditions below.
+  - There needs to be at least one adjacent opposite tile.  
+  - in that same direction, there needs to be an identical tile without any gap in between.
 3. If one player can not make a valid move, play passes back to the other player. When neither player can move, the game ends.
 4. The player with the most pieces on the board at the end of the game wins.
 
@@ -56,4 +56,5 @@
 ## Reference
 1. https://en.wikipedia.org/wiki/Reversi
 2. http://www.othelloonline.org/
-3. background image from [here](http://google.com)
+3. background image from [here](http://jsfiddle.net/ThinkingStiff/jUr9E/)
+4. icons and images from https://thenounproject.com
