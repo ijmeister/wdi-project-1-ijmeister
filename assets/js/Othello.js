@@ -236,4 +236,6 @@ Othello.prototype.whoWon = function () {
   }
 }
 
+module.exports = Othello
+
 // module.exports = Othello
