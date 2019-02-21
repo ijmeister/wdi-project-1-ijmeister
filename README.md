@@ -1,6 +1,6 @@
 # Othello
 
-#### View [Demo](https://ijmeister.github.io/wdi-project-1-ijmeister/)
+#### View [Demo](https://raymzag.github.io/wdi-project-1/)
 
 ## Game Setup
 
